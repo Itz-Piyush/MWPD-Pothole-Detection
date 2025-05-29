@@ -81,31 +81,30 @@ project-root/
 
 
 ---
-
 ## 🧪 Training
 
-Use the command below to train the YOLOv5 model on the MWPD dataset:
+To train the YOLOv5 model on the MWPD (Multi-Weather Pothole Detection) dataset, use the following command:
 
+```bash
 python train.py --img 640 --batch 16 --epochs 50 --data data.yaml --weights yolov5s.pt --cache
+```
 
-Parameter Explanation:
+| Parameter              | Description                                                       |
+| ---------------------- | ----------------------------------------------------------------- |
+| `--img 640`            | Sets the input image resolution (640x640 is a standard choice).   |
+| `--batch 16`           | Number of training samples processed before the model is updated. |
+| `--epochs 50`          | Number of times the model will iterate over the entire dataset.   |
+| `--data data.yaml`     | Path to the custom dataset configuration file.                    |
+| `--weights yolov5s.pt` | Pretrained YOLOv5 model to use as a starting point for training.  |
+| `--cache`              | Caches images for faster data loading during training.            |
 
---img 640 → Image size (can also use 416, 512)
+✅ After training, the best model weights are saved to: runs/train/exp/weights/best.pt
 
---batch 16 → Batch size for training
-
---epochs 50 → Number of training epochs
-
---data data.yaml → Dataset configuration file
-
---weights yolov5s.pt → Pretrained base model
-
---cache → Caches images for faster training
-
-🎯 Inference
+## 🎯 Inference
 To perform pothole detection using the trained model, run:
-
+```bash
 python detect.py --weights runs/train/exp/weights/best.pt --img 640 --source path_to_image_or_video
+```
 Examples of --source:
 
 --source sample.jpg → Single image
@@ -117,10 +116,9 @@ Examples of --source:
 The output will be saved in the runs/detect/exp/ folder by default.
 
 📊 Results
-The model predicts pothole regions with bounding boxes and confidence scores.
+* The model predicts pothole regions with bounding boxes and confidence scores.
+* Works effectively in diverse weather and lighting conditions, as trained on MWPD.
+* Performance metrics (precision, recall, mAP) are logged in training output.
 
-Works effectively in diverse weather and lighting conditions, as trained on MWPD.
-
-Performance metrics (precision, recall, mAP) are logged in training output.
 
 
