@@ -1,4 +1,3 @@
-# MWPD-Pothole-Detection
 # 🕳️ Pothole Detection Using YOLOv5
 
 Detecting potholes in diverse weather conditions using a custom-trained YOLOv5 model on the MWPD dataset.
@@ -20,41 +19,37 @@ Detecting potholes in diverse weather conditions using a custom-trained YOLOv5 m
 
 ## 📖 Introduction
 
-This project provides an AI-powered solution for detecting potholes on roads using images or videos. The core idea is to improve road safety and assist city authorities by identifying potholes automatically using computer vision.
-
-Built using **YOLOv5**, the model has been trained on the **Multi-Weather Pothole Detection (MWPD)** dataset to recognize potholes under various lighting and weather conditions such as rain, fog, and shadows.
+This project offers an AI-powered solution to detect potholes on roads using real-time image or video input. By leveraging deep learning, specifically the YOLOv5 object detection algorithm, this system aims to assist in smart city infrastructure and road maintenance.
 
 ---
 
 ## 🌦️ Multi-Weather Pothole Detection (MWPD)
 
-The **MWPD dataset** contains annotated images of potholes captured in real-world scenarios and different environmental conditions. It enhances the model's robustness and real-time detection capability in variable outdoor settings. This diversity in training data allows the model to perform well even when visibility is challenging due to weather.
+The **MWPD dataset** (Multi-Weather Pothole Detection) contains labeled images of potholes captured in various conditions—rain, fog, low light, and shadows. This improves the model’s ability to detect potholes under real-world circumstances, increasing reliability and robustness.
 
 ---
 
 ## 🧠 YOLOv5
 
-**YOLOv5 (You Only Look Once)** is a real-time object detection algorithm that detects objects with high accuracy in a single neural network pass. Its benefits include:
+**YOLOv5** (You Only Look Once, version 5) is a high-speed, high-accuracy object detection model. It offers:
 
-- Faster training and inference
-- Lightweight and optimized architecture
-- Customizable for different object classes (e.g., potholes)
-- Strong community and open-source support
+- Real-time detection
+- Efficient performance on both CPU and GPU
+- Strong community support
+- Pretrained weights and easy customization
 
-In this project, we fine-tuned a YOLOv5 model specifically to detect potholes from road imagery.
+In this project, YOLOv5 is fine-tuned for binary object detection (potholes vs. background) using the MWPD dataset.
 
 ---
 
 ## 🏗️ Ultralytics Framework
 
-This project utilizes the official [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5) implementation. Ultralytics provides:
+This project is built using the [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5) repository. Ultralytics provides:
 
-- A ready-to-use PyTorch-based training pipeline
-- Pretrained models
-- Evaluation and visualization tools
-- Support for custom datasets
-
-The model training and inference pipelines are built upon this framework.
+- Easy-to-use APIs for training and inference
+- Visualization tools
+- Model evaluation metrics
+- Support for custom datasets via `data.yaml`
 
 ---
 
@@ -62,34 +57,75 @@ The model training and inference pipelines are built upon this framework.
 
 ### 1. Clone the YOLOv5 Repository
 
-'''bash
+```bash
 git clone https://github.com/ultralytics/yolov5
 cd yolov5
-pip install -r requirements.txt
+pip install -r requirements.txt 
+
+## 📁 Add Required Files
+
+Before running training or inference, make sure the following files are correctly added:
+
+- `MWPD.ipynb` – Jupyter notebook containing the full training and inference pipeline.
+- `data.yaml` – Custom dataset configuration file specifying class names and dataset paths.
+- `best.pt` – Trained YOLOv5 model weights obtained after training.
+- `runs/` – (Optional) Contains training logs, weights, and result images from YOLOv5.
+
+Organize your project structure as follows:
+project-root/
+│
+├── yolov5/
+│ ├── MWPD.ipynb
+│ ├── data.yaml
+│ ├── best.pt
+│ └── ...
 
 
-2. Add Your Files
-Place your custom notebook (MWPD.ipynb), dataset configuration (data.yaml), and weights (best.pt) inside the directory as needed.
+---
 
-🧪 Training
-To train your model on the MWPD dataset:
+## 🧪 Training
 
-bash
-Copy
-Edit
+Use the command below to train the YOLOv5 model on the MWPD dataset:
+
+```bash
 python train.py --img 640 --batch 16 --epochs 50 --data data.yaml --weights yolov5s.pt --cache
-This trains YOLOv5 using the small variant (yolov5s.pt) as the base and saves the trained weights in the runs/ directory.
+
+Parameter Explanation:
+
+--img 640 → Image size (can also use 416, 512)
+
+--batch 16 → Batch size for training
+
+--epochs 50 → Number of training epochs
+
+--data data.yaml → Dataset configuration file
+
+--weights yolov5s.pt → Pretrained base model
+
+--cache → Caches images for faster training
 
 🎯 Inference
-To detect potholes from an image or video using the trained model:
+To perform pothole detection using the trained model, run:
 
 bash
 Copy
 Edit
 python detect.py --weights runs/train/exp/weights/best.pt --img 640 --source path_to_image_or_video
-Replace path_to_image_or_video with a valid image file, video, or webcam stream.
+Examples of --source:
+
+--source sample.jpg → Single image
+
+--source test.mp4 → Video file
+
+--source 0 → Webcam stream
+
+The output will be saved in the runs/detect/exp/ folder by default.
 
 📊 Results
-Training Output: YOLOv5 generates training results such as precision, recall, and loss curves.
+The model predicts pothole regions with bounding boxes and confidence scores.
 
-Detection Output: The model outputs bounding boxes with confidence scores around potholes in the input media.
+Works effectively in diverse weather and lighting conditions, as trained on MWPD.
+
+Performance metrics (precision, recall, mAP) are logged in training output.
+
+
