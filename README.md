@@ -57,7 +57,6 @@ This project is built using the [Ultralytics YOLOv5](https://github.com/ultralyt
 
 ### 1. Clone the YOLOv5 Repository
 
-```bash
 git clone https://github.com/ultralytics/yolov5
 cd yolov5
 pip install -r requirements.txt 
@@ -87,7 +86,6 @@ project-root/
 
 Use the command below to train the YOLOv5 model on the MWPD dataset:
 
-```bash
 python train.py --img 640 --batch 16 --epochs 50 --data data.yaml --weights yolov5s.pt --cache
 
 Parameter Explanation:
@@ -107,9 +105,6 @@ Parameter Explanation:
 🎯 Inference
 To perform pothole detection using the trained model, run:
 
-bash
-Copy
-Edit
 python detect.py --weights runs/train/exp/weights/best.pt --img 640 --source path_to_image_or_video
 Examples of --source:
 
